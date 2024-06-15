@@ -7,11 +7,11 @@ export interface IPayments extends Document {
     status: 'paid' | 'pending';
 }
 
-const PaymentsSchema: Schema = new Schema({
+const PaymentSchema: Schema = new Schema({
     staffId: { type: mongoose.Types.ObjectId, ref: 'Staff', required: true },
     amount: { type: Number, required: true },
     date: { type: Date, required: true },
     status: { type: String, enum: ['paid', 'pending'], required: true }
 })
 
-export default mongoose.model<IPayments>('Payments', PaymentsSchema);
+export default mongoose.model<IPayments>('Payments', PaymentSchema);
