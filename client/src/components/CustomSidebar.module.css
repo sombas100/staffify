@@ -28,7 +28,7 @@
   
   .sidebarItem {
     padding: 2rem 3rem; /* Adjust padding to push items towards the middle */
-    font-size: 0.875rem; /* Tailwind's text-sm */
+    font-size: 20px; /* Tailwind's text-sm */
     display: flex;
     align-items: center;
     height: 3rem; /* Tailwind's h-12 */
