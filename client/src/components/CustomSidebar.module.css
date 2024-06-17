@@ -1,14 +1,17 @@
 @import '../vars.css';
 
 .sidebar {
+  position: fixed;
     width: 14rem; /* Tailwind's width-64 */
     min-height: 100vh; /* Extend to bottom of page */
+    min-height: 100vh;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1); /* Tailwind's shadow-md */
     background-color: var(--color-primary);
     color: var(--color-text);
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: auto;
     
   }
   
