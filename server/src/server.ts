@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config(); 
+
 import express from 'express';
 import mongoose from 'mongoose';
 import cors = require('cors')
@@ -5,7 +8,9 @@ import bodyParser from 'body-parser';
 import staffRoutes from './routes/staff';
 import attendanceRoutes from './routes/attendance';
 import paymentRoutes from './routes/payments';
-import { Request } from 'express';;
+import authRoutes from './routes/auth';
+import { Request } from 'express';
+import { authMiddleware } from './controllers/auth';
 
 
 
@@ -22,9 +27,10 @@ mongoose.connect('mongodb+srv://sparkyvids:VshiiFobWB0oDgQt@staffify.aysa3gi.mon
     console.error('MongoDB connection error:', err);
   });
 
-app.use('/api/staff', staffRoutes);
-app.use('/api/attendance', attendanceRoutes);
-app.use('/api/payments', paymentRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/staff',authMiddleware, staffRoutes);
+app.use('/api/attendance',authMiddleware, attendanceRoutes);
+app.use('/api/payments',authMiddleware, paymentRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is now running on port: ${PORT}`);
