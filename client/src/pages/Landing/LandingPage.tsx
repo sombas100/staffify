@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.css";
-import Button from "react-bootstrap/Button";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { Button } from "flowbite-react";
 
 const LandingPage = () => {
   return (
@@ -15,10 +15,11 @@ const LandingPage = () => {
           salary calculation, salary payment and more.
         </p>
         <Link to="/login">
-          <Button className={styles.btn}>
+          <Button outline gradientDuoTone="pinkToOrange" className={styles.btn}>
             Get Started
             <FaLongArrowAltRight
-              style={{ paddingLeft: "10px", marginTop: "3px" }}
+              size={20}
+              style={{ paddingLeft: "7px", top: "3px" }}
             />
           </Button>
         </Link>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./LoginPage.module.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
+import { useNavigate, Link } from "react-router-dom";
+import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -25,21 +25,52 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Login</h1>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button onClick={handleLogin}>Login</Button>
-      {error && <p>{error}</p>}
+      <div className={styles.content}>
+        <h1
+          style={{ marginLeft: "60px", fontSize: "25px" }}
+          className="mb-5 font-bold"
+        >
+          Start managaging staff
+        </h1>
+        <form onSubmit={handleLogin} className="flex max-w-md flex-col gap-4">
+          <div>
+            <TextInput
+              id="email1"
+              type="email"
+              placeholder="Email"
+              required
+              onChange={(e) => e.target.value}
+            />
+          </div>
+          <div>
+            <TextInput
+              id="password1"
+              type="password"
+              placeholder="Password"
+              required
+              onChange={(e) => e.target.value}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="remember">Remember me</Label>
+            <Checkbox id="remember" />
+            <p style={{ fontSize: "12px", paddingLeft: "90px" }}>
+              <Link to="/register">
+                Don't have a staffify account?{" "}
+                <span
+                  className={styles.span}
+                  style={{ color: "blue", cursor: "pointer" }}
+                >
+                  Register here
+                </span>
+              </Link>
+            </p>
+          </div>
+          <Button typeof="submit" gradientMonochrome="failure" type="submit">
+            Log in
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };

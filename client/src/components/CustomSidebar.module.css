@@ -1,0 +1,46 @@
+@import '../vars.css';
+
+.sidebar {
+    width: 14rem; /* Tailwind's width-64 */
+    min-height: 100vh; /* Extend to bottom of page */
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1); /* Tailwind's shadow-md */
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+  }
+  
+  .appName {
+    font-size: 1.5rem; /* Tailwind's text-xl */
+    font-weight: 800; /* Tailwind's font-bold */
+    margin: 1rem 0; /* Tailwind's my-4 */
+    text-align: center;
+    text-decoration: underline;
+  }
+  
+  .sidebarItems {
+    width: 100%;
+    padding-top: 2rem; /* Tailwind's pt-8 */
+    margin-left: 2.5rem;
+  }
+  
+  .sidebarItem {
+    padding: 2rem 3rem; /* Adjust padding to push items towards the middle */
+    font-size: 0.875rem; /* Tailwind's text-sm */
+    display: flex;
+    align-items: center;
+    height: 3rem; /* Tailwind's h-12 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 0.375rem; /* Tailwind's rounded */
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  .sidebarItem:hover {
+    background-color: var(--color-bg);
+    color: var(--color-text2);
+  }
+  
