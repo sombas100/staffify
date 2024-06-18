@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import styles from "./AddStaffModal.module.css";
+import React, { useState, useEffect } from "react";
 import { Button } from "flowbite-react";
-
-interface AddStaffModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onAddStaff: (formData: Omit<Staff, "_id">) => void;
-}
+import styles from "./EditStaffModal.module.css";
 
 interface Staff {
-  _id?: string;
+  _id: string;
   name: string;
   role: string;
   salary: number;
 }
 
-const AddStaffModal: React.FC<AddStaffModalProps> = ({
+interface EditStaffModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  staff: Staff;
+  onUpdateStaff: (FormData: Staff) => void;
+}
+
+const EditStaffModal: React.FC<EditStaffModalProps> = ({
   isOpen,
   onClose,
-  onAddStaff,
+  staff,
+  onUpdateStaff,
 }) => {
-  const initialFormData = {
-    name: "",
-    role: "",
-    salary: 0,
-  };
+  const [formData, setFormData] = useState<Staff>(staff);
 
-  const [formData, setFormData] = useState(initialFormData);
+  useEffect(() => {
+    setFormData(staff);
+  }, [staff]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -37,9 +37,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onAddStaff(formData);
-    onClose();
-    setFormData(initialFormData); // Reset form after submission
+    onUpdateStaff(formData);
   };
 
   if (!isOpen) return null;
@@ -47,7 +45,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({
   return (
     <div className={styles.modalBackdrop}>
       <div className={styles.modalContent}>
-        <h2>Add New Staff</h2>
+        <h2>Edit Staff</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -74,8 +72,8 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({
             required
           />
           <div className={styles.modalActions}>
-            <Button type="submit" gradientMonochrome="lime">
-              Add Staff
+            <Button type="submit" gradientMonochrome="purple">
+              Update Staff
             </Button>
             <Button
               type="button"
@@ -91,4 +89,4 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({
   );
 };
 
-export default AddStaffModal;
+export default EditStaffModal;

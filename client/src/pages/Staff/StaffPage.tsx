@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import AddStaffModal from "../../components/Modal/AddStaffModal";
+import EditStaffModal from "../../components/Modal/EditStaffModal";
 import styles from "./StaffPage.module.css";
 import { CustomSidebar } from "../../components/CustomSidebar";
 import { Button } from "flowbite-react";
 import { axiosInstance } from "../../api/axiosConfig";
 import { useAuth } from "../../contexts/AuthContext";
 import { FaTrashCan } from "react-icons/fa6";
+import { TbUserEdit } from "react-icons/tb";
 
 interface Staff {
   _id: string;
@@ -15,53 +17,98 @@ interface Staff {
 }
 
 const StaffPage: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [staffList, setStaffList] = useState<Staff[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false); // Add submitting state
+  const [currentStaff, setCurrentStaff] = useState<Staff | null>(null);
   const { token } = useAuth();
 
   useEffect(() => {
     fetchStaffList();
-    console.log(token);
-  }, [token]); // Ensure this effect runs only when the token changes
+  }, []);
 
   const fetchStaffList = async () => {
     try {
-      const res = await axiosInstance.get<Staff[]>("/api/staff");
+      const res = await axiosInstance.get<Staff[]>(
+        "http://localhost:5000/api/staff",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setStaffList(res.data);
     } catch (error) {
       console.error("Error fetching staff list:", error);
     }
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const handleOpenAddModal = () => {
+    setIsAddModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseAddModal = () => {
+    setIsAddModalOpen(false);
+  };
+
+  const handleOpenEditModal = (staff: Staff) => {
+    setCurrentStaff(staff);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   const handleAddStaff = async (formData: Omit<Staff, "_id">) => {
-    if (isSubmitting) return;
-    setIsSubmitting(true);
     try {
-      const res = await axiosInstance.post<Staff>("/api/staff", formData);
+      const res = await axiosInstance.post<Staff>(
+        "http://localhost:5000/api/staff",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const newStaffMember = res.data;
       setStaffList((prevStaffList) => [...prevStaffList, newStaffMember]);
       alert("Staff member added successfully");
-      handleCloseModal();
+      handleCloseAddModal();
     } catch (error) {
       alert("Error adding staff member");
       console.error(error);
-    } finally {
-      setIsSubmitting(false);
+    }
+  };
+
+  const handleUpdateStaff = async (updatedStaff: Staff) => {
+    try {
+      const res = await axiosInstance.put<Staff>(
+        `http://localhost:5000/api/staff/${updatedStaff._id}`,
+        updatedStaff,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const updatedStaffMember = res.data;
+      setStaffList((prevStaffList) =>
+        prevStaffList.map((staff) =>
+          staff._id === updatedStaffMember._id ? updatedStaffMember : staff
+        )
+      );
+      alert("Staff member updated successfully");
+      handleCloseEditModal();
+    } catch (error) {
+      alert("Error updating staff member");
+      console.error(error);
     }
   };
 
   const handleDeleteStaff = async (staffId: string) => {
     try {
-      await axiosInstance.delete(`/api/staff/${staffId}`, {
+      await axiosInstance.delete(`http://localhost:5000/api/staff/${staffId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -69,7 +116,7 @@ const StaffPage: React.FC = () => {
       setStaffList((prevStaffList) =>
         prevStaffList.filter((staff) => staff._id !== staffId)
       );
-      alert("Staff deleted successfully");
+      alert("Staff member deleted successfully");
     } catch (error) {
       alert("Error deleting staff member");
       console.error(error);
@@ -87,16 +134,24 @@ const StaffPage: React.FC = () => {
             gradientMonochrome="cyan"
             outline
             className={styles.addButton}
-            onClick={handleOpenModal}
+            onClick={handleOpenAddModal}
           >
             Add Staff
           </Button>
         </div>
         <AddStaffModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
+          isOpen={isAddModalOpen}
+          onClose={handleCloseAddModal}
           onAddStaff={handleAddStaff}
         />
+        {currentStaff && (
+          <EditStaffModal
+            isOpen={isEditModalOpen}
+            onClose={handleCloseEditModal}
+            staff={currentStaff}
+            onUpdateStaff={handleUpdateStaff}
+          />
+        )}
         <div className={styles.staffTable}>
           <h2
             style={{
@@ -112,7 +167,8 @@ const StaffPage: React.FC = () => {
               <tr>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Salary per hour</th>
+                <th>Salary per-hour</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -123,10 +179,19 @@ const StaffPage: React.FC = () => {
                   <td>{staff.salary}</td>
                   <td>
                     <Button
+                      outline
+                      style={{ marginBottom: "5px" }}
+                      gradientMonochrome="purple"
+                      onClick={() => handleOpenEditModal(staff)}
+                    >
+                      <TbUserEdit size={20} />
+                    </Button>
+                    <Button
+                      outline
                       gradientMonochrome="failure"
                       onClick={() => handleDeleteStaff(staff._id)}
                     >
-                      <FaTrashCan />
+                      <FaTrashCan size={20} />
                     </Button>
                   </td>
                 </tr>
