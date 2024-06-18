@@ -4,6 +4,8 @@ import styles from "./StaffPage.module.css";
 import { CustomSidebar } from "../../components/CustomSidebar";
 import { Button } from "flowbite-react";
 import axios from "axios";
+import { useAuth } from "../../contexts/AuthContext";
+import { axiosInstance } from "../../api/axiosConfig";
 
 interface Staff {
   _id: string;
@@ -15,14 +17,17 @@ interface Staff {
 const StaffPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [staffList, setStaffList] = useState<Staff[]>([]);
+  const { token } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchStaffList();
-  }, []);
+    console.log(token);
+  }, [token]);
 
   const fetchStaffList = async () => {
     try {
-      const res = await axios.get<Staff[]>("http://localhost:5000/api/staff");
+      const res = await axiosInstance.get<Staff[]>("/api/staff");
       setStaffList(res.data);
     } catch (error) {
       console.error("Error fetching staff list:", error);
@@ -39,13 +44,11 @@ const StaffPage: React.FC = () => {
 
   const handleAddStaff = async (formData: Staff) => {
     try {
-      const res = await axios.post<Staff>(
-        "http://localhost:5000/api/staff",
-        formData
-      );
+      const res = await axiosInstance.post<Staff>("/api/staff", formData);
       const newStaffMember = res.data;
       setStaffList((prevStaffList) => [...prevStaffList, newStaffMember]);
-      alert("Staff member added successsfully");
+      alert("Staff member added successfully");
+
       handleCloseModal();
     } catch (error) {
       alert("Error adding staff member");
@@ -89,7 +92,7 @@ const StaffPage: React.FC = () => {
               <tr>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Salary</th>
+                <th>£ Salary per-hour</th>
               </tr>
             </thead>
             <tbody>

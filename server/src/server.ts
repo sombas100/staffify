@@ -28,7 +28,7 @@ mongoose.connect('mongodb+srv://sparkyvids:VshiiFobWB0oDgQt@staffify.aysa3gi.mon
   });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/staff',authMiddleware, staffRoutes);
+app.use('/api/staff', staffRoutes);
 app.use('/api/attendance',authMiddleware, attendanceRoutes);
 app.use('/api/payments',authMiddleware, paymentRoutes);
 

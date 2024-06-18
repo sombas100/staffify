@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import styles from "./LoginPage.module.css";
-import axios from "axios";
+
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { setAuthToken } from "../../api/axiosConfig";
 
-interface LoginPageProps {
-  onLogin: (email: string, password: string) => void;
-}
+import { useAuth } from "../../contexts/AuthContext";
 
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await onLogin(email, password);
+      await login(email, password);
       navigate("/dashboard");
     } catch (error) {
       setError("Invalid credentials");

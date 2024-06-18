@@ -12,56 +12,21 @@ import StaffPage from "./pages/Staff/StaffPage";
 
 import { axiosInstance, setAuthToken } from "./api/axiosConfig";
 import { useEffect, useState } from "react";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setAuthToken(token);
-      setIsAuthenticated(true);
-    }
-  }, []);
-
-  const handleLogin = async (email: string, password: string) => {
-    try {
-      const res = await axiosInstance.post("/auth/login", { email, password });
-      const token = res.data.token;
-      localStorage.setItem("token", token); // Store token in localStorage
-      setAuthToken(token); // Set token in Axios headers
-      setIsAuthenticated(true);
-    } catch (error) {
-      throw new Error("Invalid credentials");
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setAuthToken(null);
-    setIsAuthenticated(false);
-  };
-
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            isAuthenticated ? <Dashboard /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route
-          path="/staff"
-          element={
-            isAuthenticated ? <StaffPage /> : <Navigate to="/login" replace />
-          }
-        />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/staff" element={<StaffPage />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

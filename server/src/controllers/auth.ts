@@ -1,12 +1,24 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload} from 'jsonwebtoken';
 import User from '../models/User';
 
 const secret = process.env.JWT_SECRET;
 
 if (!secret) {
     throw new Error('JWT_SECRET is not defined in the .env')
+}
+
+interface DecodedToken extends JwtPayload {
+    userId: string;
+}
+
+declare global {
+    namespace Express {
+        interface Request {
+            user?: JwtPayload; // Adjust this to match your DecodedToken interface
+        }
+    }
 }
 
 export const register = async (req: Request, res: Response) => {
@@ -48,10 +60,11 @@ export const authMiddleware = (req: Request, res: Response, next: Function) => {
     }
 
     try {
-        const decoded = jwt.verify(token, secret);
-        (req as any).user = decoded;
+        const decoded = jwt.verify(token, secret) as DecodedToken;
+        req.user = decoded; // Attach user information to request
         next();
-    } catch (error:any) {
-        res.status(401).json({ message: 'Token is not valid' });
+    } catch (error) {
+        console.error('Token verification failed:', error);
+        return res.status(401).json({ message: 'Token is not valid' });
     }
-}
+};
