@@ -3,20 +3,22 @@ import styles from "./LoginPage.module.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { setAuthToken } from "../../api/axiosConfig";
 
-const LoginPage: React.FC = () => {
+interface LoginPageProps {
+  onLogin: (email: string, password: string) => void;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password,
-      });
-      localStorage.setItem("token", res.data.token);
+      await onLogin(email, password);
       navigate("/dashboard");
     } catch (error) {
       setError("Invalid credentials");
@@ -32,14 +34,14 @@ const LoginPage: React.FC = () => {
         >
           Start managaging staff
         </h1>
-        <form onSubmit={handleLogin} className="flex max-w-md flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-4">
           <div>
             <TextInput
               id="email1"
               type="email"
               placeholder="Email"
               required
-              onChange={(e) => e.target.value}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
@@ -48,7 +50,7 @@ const LoginPage: React.FC = () => {
               type="password"
               placeholder="Password"
               required
-              onChange={(e) => e.target.value}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex items-center gap-2">
@@ -69,6 +71,7 @@ const LoginPage: React.FC = () => {
           <Button typeof="submit" gradientMonochrome="failure" type="submit">
             Log in
           </Button>
+          {error && <p className="text-red-500">{error}</p>}
         </form>
       </div>
     </div>

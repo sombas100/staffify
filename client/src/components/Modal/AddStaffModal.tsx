@@ -3,12 +3,24 @@ import styles from "./AddStaffModal.module.css";
 import axios from "axios";
 import { Button } from "flowbite-react";
 
+interface Staff {
+  _id: string;
+  name: string;
+  role: string;
+  salary: number;
+}
+
 interface AddStaffModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onAddStaff: (formData: Staff) => void;
 }
 
-const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose }) => {
+const AddStaffModal: React.FC<AddStaffModalProps> = ({
+  isOpen,
+  onClose,
+  onAddStaff,
+}) => {
   const initialFormData = {
     name: "",
     role: "",
@@ -27,7 +39,9 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/staff/add", formData);
+      const res = await axios.post("http://localhost:5000/api/staff", formData);
+      const newStaffMember = res.data;
+      onAddStaff(newStaffMember);
       alert("Staff member added successfully");
       onClose();
       setFormData(initialFormData);
@@ -63,7 +77,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({ isOpen, onClose }) => {
           <input
             type="number"
             name="salary"
-            value={formData.name}
+            value={formData.salary.toString()}
             onChange={handleChange}
             placeholder="Salary"
             required
