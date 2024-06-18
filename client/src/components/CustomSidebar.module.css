@@ -46,4 +46,10 @@
     background-color: var(--color-bg);
     color: var(--color-text2);
   }
+
+  .sidebarItems li.active {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-weight: bold;
+  }
   
