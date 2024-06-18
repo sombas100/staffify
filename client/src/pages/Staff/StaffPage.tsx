@@ -3,9 +3,9 @@ import AddStaffModal from "../../components/Modal/AddStaffModal";
 import styles from "./StaffPage.module.css";
 import { CustomSidebar } from "../../components/CustomSidebar";
 import { Button } from "flowbite-react";
-import axios from "axios";
-import { useAuth } from "../../contexts/AuthContext";
 import { axiosInstance } from "../../api/axiosConfig";
+import { useAuth } from "../../contexts/AuthContext";
+import { FaTrashCan } from "react-icons/fa6";
 
 interface Staff {
   _id: string;
@@ -17,13 +17,13 @@ interface Staff {
 const StaffPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [staffList, setStaffList] = useState<Staff[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add submitting state
   const { token } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchStaffList();
     console.log(token);
-  }, [token]);
+  }, [token]); // Ensure this effect runs only when the token changes
 
   const fetchStaffList = async () => {
     try {
@@ -42,16 +42,36 @@ const StaffPage: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleAddStaff = async (formData: Staff) => {
+  const handleAddStaff = async (formData: Omit<Staff, "_id">) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       const res = await axiosInstance.post<Staff>("/api/staff", formData);
       const newStaffMember = res.data;
       setStaffList((prevStaffList) => [...prevStaffList, newStaffMember]);
       alert("Staff member added successfully");
-
       handleCloseModal();
     } catch (error) {
       alert("Error adding staff member");
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteStaff = async (staffId: string) => {
+    try {
+      await axiosInstance.delete(`/api/staff/${staffId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setStaffList((prevStaffList) =>
+        prevStaffList.filter((staff) => staff._id !== staffId)
+      );
+      alert("Staff deleted successfully");
+    } catch (error) {
+      alert("Error deleting staff member");
       console.error(error);
     }
   };
@@ -92,7 +112,7 @@ const StaffPage: React.FC = () => {
               <tr>
                 <th>Name</th>
                 <th>Role</th>
-                <th>£ Salary per-hour</th>
+                <th>Salary per hour</th>
               </tr>
             </thead>
             <tbody>
@@ -101,6 +121,14 @@ const StaffPage: React.FC = () => {
                   <td>{staff.name}</td>
                   <td>{staff.role}</td>
                   <td>{staff.salary}</td>
+                  <td>
+                    <Button
+                      gradientMonochrome="failure"
+                      onClick={() => handleDeleteStaff(staff._id)}
+                    >
+                      <FaTrashCan />
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>

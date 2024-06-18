@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import styles from "./AddStaffModal.module.css";
-import axios from "axios";
 import { Button } from "flowbite-react";
+
+interface AddStaffModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onAddStaff: (formData: Omit<Staff, "_id">) => void;
+}
 
 interface Staff {
   _id: string;
   name: string;
   role: string;
   salary: number;
-}
-
-interface AddStaffModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onAddStaff: (formData: Staff) => void;
 }
 
 const AddStaffModal: React.FC<AddStaffModalProps> = ({
@@ -27,7 +26,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({
     salary: 0,
   };
 
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState<Omit<Staff, "_id">>(initialFormData);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -36,19 +35,10 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:5000/api/staff", formData);
-      const newStaffMember = res.data;
-      onAddStaff(newStaffMember);
-      alert("Staff member added successfully");
-      onClose();
-      setFormData(initialFormData);
-    } catch (error) {
-      alert("Error adding staff member");
-      console.error(error);
-    }
+    onAddStaff(formData);
+    setFormData(initialFormData); // Reset form after submission
   };
 
   if (!isOpen) return null;
@@ -77,7 +67,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({
           <input
             type="number"
             name="salary"
-            value={formData.salary.toString()}
+            value={formData.salary}
             onChange={handleChange}
             placeholder="Salary"
             required
