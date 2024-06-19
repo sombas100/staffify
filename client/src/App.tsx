@@ -13,6 +13,7 @@ import StaffPage from "./pages/Staff/StaffPage";
 import { axiosInstance, setAuthToken } from "./api/axiosConfig";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
+import SalaryPage from "./pages/Salary/SalaryPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff" element={<StaffPage />} />
+          <Route path="/salary" element={<SalaryPage />}></Route>
         </Routes>
       </Router>
     </AuthProvider>

@@ -1,0 +1,92 @@
+@import '../../vars.css';
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+   margin-left: 250px; 
+   padding: 20px;
+   width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.salaryTable {
+    margin-top: 20px;
+}
+
+.tableTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .content {
+      margin-left: 0;
+      padding: 10px;
+      width: 100%;
+    }
+  
+    .formContainer {
+      margin-bottom: 10px;
+    }
+  
+    .formTitle, .tableTitle {
+      font-size: 20px;
+    }
+  
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+  
+    tr {
+      margin-bottom: 15px;
+    }
+  
+    th, td {
+      text-align: left;
+      padding-left: 50%;
+      position: relative;
+    }
+  
+    th::before, td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+    }
+  
+    th::before {
+      content: attr(data-label);
+    }
+  }
