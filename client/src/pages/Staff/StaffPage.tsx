@@ -165,19 +165,19 @@ const StaffPage: React.FC = () => {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Salary per-hour</th>
-                <th>Actions</th>
+                <th data-label="Name">Name</th>
+                <th data-label="Role">Role</th>
+                <th data-label="Salary per-hour">Salary per-hour</th>
+                <th data-label="Actions">Actions</th>
               </tr>
             </thead>
             <tbody>
               {staffList.map((staff) => (
                 <tr key={staff._id}>
-                  <td>{staff.name}</td>
-                  <td>{staff.role}</td>
-                  <td>{staff.salary}</td>
-                  <td>
+                  <td data-label="Name">{staff.name}</td>
+                  <td data-label="Role">{staff.role}</td>
+                  <td data-label="Salary per-hour">{staff.salary}</td>
+                  <td data-label="Actions">
                     <Button
                       outline
                       style={{ marginBottom: "5px" }}

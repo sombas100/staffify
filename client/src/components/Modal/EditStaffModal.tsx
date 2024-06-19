@@ -72,10 +72,15 @@ const EditStaffModal: React.FC<EditStaffModalProps> = ({
             required
           />
           <div className={styles.modalActions}>
-            <Button type="submit" gradientMonochrome="purple">
+            <Button
+              style={{ fontWeight: "600" }}
+              type="submit"
+              gradientMonochrome="purple"
+            >
               Update Staff
             </Button>
             <Button
+              style={{ fontWeight: "600" }}
               type="button"
               gradientMonochrome="failure"
               onClick={onClose}

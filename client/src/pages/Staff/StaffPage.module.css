@@ -1,72 +1,111 @@
 .container {
-    display: flex;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.content {
+  margin-left: 250px; /* Adjust this value based on your sidebar width */
+  padding: 20px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.addButton {
+  font-weight: 600;
+}
+
+.staffTable {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Media Queries for smaller screens */
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
   }
-  
+
   .content {
-    margin-left: 250px; 
-    flex: 1;
-    padding: 20px;
+    margin-left: 0;
+    padding: 10px;
+    width: 100%;
   }
-  
+
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .addButton {
+    width: 100%;
+    margin-top: 10px;
   }
 
   .staffTable {
-    margin-top: 20px;
+    overflow-x: auto;
+    margin-top: 10px;
   }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+  table, thead, tbody, th, td, tr {
+    display: block;
   }
-  
-  table th, table td {
-    padding: 12px 15px;
+
+  tr {
+    margin-bottom: 15px;
+  }
+
+  th, td {
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    padding-left: 50%;
+    position: relative;
   }
-  
-  table th {
-    background-color: #f2f2f2;
+
+  th::before, td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    white-space: nowrap;
+    text-align: left;
     font-weight: bold;
-    color: #333;
-  }
-  
-  table tbody tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-
-  @media screen and (max-width: 768px) {
-    .container {
-      flex-direction: column;
-    }
-  
-    .header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .addButton {
-      margin-left: 0;
-      margin-top: 10px;
-    }
-  
-    .heading {
-      font-size: 24px;
-    }
-  
-    .table th,
-    .table td {
-      padding: 8px;
-      font-size: 14px;
-    }
   }
 
-  
+  th::before {
+    content: attr(data-label);
+  }
+
+  td.actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  td.actions button {
+    margin-bottom: 5px;
+  }
+}
