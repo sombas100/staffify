@@ -94,6 +94,8 @@
   .dropdownContent li:hover {
     background-color: #555;
   }
+
+  
   
   @media screen and (max-width: 768px) {
     .sidebar {

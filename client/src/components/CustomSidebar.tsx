@@ -59,12 +59,21 @@ export const CustomSidebar = () => {
 
       {/* Mobile Navbar */}
       <div className={styles.mobileNavbar}>
+        <h1
+          style={{
+            fontWeight: "600",
+            fontSize: "20px",
+            textDecoration: "underline",
+          }}
+        >
+          Staffify
+        </h1>
         <Button
           className={styles.dropdownButton}
           onClick={toggleDropdown}
-          gradientDuoTone="redToYellow"
+          gradientMonochrome="failure"
         >
-          <GiHamburgerMenu size={25} />
+          <GiHamburgerMenu size={20} />
         </Button>
 
         {showDropdown && (
