@@ -19,7 +19,7 @@ interface Attendance {
     _id: string;
     name: string;
     role: string;
-  };
+  } | null;
   date: string;
   status: "present" | "absent" | "on leave";
 }
@@ -148,7 +148,7 @@ const AttendancePage: React.FC = () => {
             <tbody>
               {attendanceList.map((attendance) => (
                 <tr key={attendance._id}>
-                  <td>{attendance.staffId.name}</td>
+                  <td>{attendance.staffId?.name}</td>
                   <td>{new Date(attendance.date).toLocaleDateString()}</td>
                   <td>{attendance.status}</td>
                   <td>
