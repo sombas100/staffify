@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 17%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.addButton {
+  font-weight: 600;
+}
+
+.attendanceTable {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tableTitle {
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px; /* Adjust padding for compactness */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Prevent wrapping for long content */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Show ellipsis for overflow */
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.actions {
+  white-space: nowrap;
+}

@@ -14,6 +14,7 @@ import { axiosInstance, setAuthToken } from "./api/axiosConfig";
 import { useEffect, useState } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import SalaryPage from "./pages/Salary/SalaryPage";
+import AttendancePage from "./pages/Attendance/AttendancePage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff" element={<StaffPage />} />
           <Route path="/salary" element={<SalaryPage />}></Route>
+          <Route path="/attendance" element={<AttendancePage />}></Route>
         </Routes>
       </Router>
     </AuthProvider>

@@ -46,7 +46,7 @@ export const CustomSidebar = () => {
                 <MdOutlineWork size={30} style={{ marginRight: "10px" }} />
                 Attendance
               </Link>
-              <li style={{ marginTop: "50px" }}>
+              <li>
                 <Link to="/login" className={styles.sidebarItem}>
                   <TbLogout size={25} style={{ marginRight: "10px" }} />
                   Logout
