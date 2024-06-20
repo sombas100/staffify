@@ -40,7 +40,7 @@ export const updateStaff = async (req: Request, res: Response) => {
 export const deleteStaff = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const staff = await Staff.findByIdAndUpdate(id);
+        const staff = await Staff.findByIdAndDelete(id);
         if (!staff) {
             return res.status(404).json({ message: 'Staff member not found' });
         }

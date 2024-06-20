@@ -176,7 +176,7 @@ const StaffPage: React.FC = () => {
                 <tr key={staff._id}>
                   <td data-label="Name">{staff.name}</td>
                   <td data-label="Role">{staff.role}</td>
-                  <td data-label="Salary per-hour">{staff.salary}</td>
+                  <td data-label="Salary per-hour">£{staff.salary}</td>
                   <td data-label="Actions">
                     <Button
                       outline

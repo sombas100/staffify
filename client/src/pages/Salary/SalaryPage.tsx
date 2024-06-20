@@ -164,7 +164,7 @@ const SalaryPage: React.FC = () => {
             <thead>
               <tr>
                 <th>Staff Member</th>
-                <th>Amount</th>
+                <th>Total Amount</th>
                 <th>Date Paid</th>
                 <th data-label="Actions">Actions</th>
               </tr>
@@ -173,7 +173,7 @@ const SalaryPage: React.FC = () => {
               {salaryList.map((salary) => (
                 <tr key={salary._id}>
                   <td>{salary.staffId?.name || "Unknown Staff"}</td>
-                  <td>{salary.amount}</td>
+                  <td>£{salary.amount}</td>
                   <td>{new Date(salary.date).toLocaleDateString()}</td>
                   <td>
                     <Button

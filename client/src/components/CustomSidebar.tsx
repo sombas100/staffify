@@ -8,10 +8,16 @@ import { TbLogout } from "react-icons/tb";
 import { MdOutlineWork } from "react-icons/md";
 import { Button } from "flowbite-react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useAuth } from "../contexts/AuthContext";
 
 export const CustomSidebar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const location = useLocation();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -47,7 +53,11 @@ export const CustomSidebar = () => {
                 Attendance
               </Link>
               <li>
-                <Link to="/login" className={styles.sidebarItem}>
+                <Link
+                  onClick={handleLogout}
+                  to="/login"
+                  className={styles.sidebarItem}
+                >
                   <TbLogout size={25} style={{ marginRight: "10px" }} />
                   Logout
                 </Link>
