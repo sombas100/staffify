@@ -29,7 +29,6 @@ const AttendancePage: React.FC = () => {
   const [staffList, setStaffList] = useState<Staff[]>([]);
   const [attendanceList, setAttendanceList] = useState<Attendance[]>([]);
   const { token } = useAuth();
-  console.log("Attendance list:", attendanceList);
 
   useEffect(() => {
     fetchStaffList();

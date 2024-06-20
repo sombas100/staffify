@@ -77,10 +77,11 @@ const AddSalaryModal: React.FC<AddSalaryModalProps> = ({
           </div>
         )}
         <div className={styles.formGroup}>
-          <Label htmlFor="amount" value="Salary Amount" />
+          <Label htmlFor="amount" value="Total Amount" />
           <TextInput
             id="amount"
             type="number"
+            placeholder="Total"
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
           />

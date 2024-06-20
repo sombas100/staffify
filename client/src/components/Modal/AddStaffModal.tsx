@@ -39,7 +39,7 @@ const AddStaffModal: React.FC<AddStaffModalProps> = ({
     e.preventDefault();
     onAddStaff(formData);
     onClose();
-    setFormData(initialFormData); // Reset form after submission
+    setFormData(initialFormData);
   };
 
   if (!isOpen) return null;

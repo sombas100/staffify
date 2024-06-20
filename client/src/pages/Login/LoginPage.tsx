@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     try {
       await login(email, password);
-      navigate("/dashboard");
+      navigate("/staff");
     } catch (error) {
       setError("Invalid credentials");
     }
@@ -32,6 +32,8 @@ const LoginPage: React.FC = () => {
         >
           Start managaging your staff
         </h1>
+        <h2>Test account: testuser123@gmail.com</h2>
+        <p>Password: testuser123</p>
         <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-4">
           <div>
             <TextInput

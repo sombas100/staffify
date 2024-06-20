@@ -5,6 +5,18 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strict": true, // Enables all strict type-checking options
+    "esModuleInterop": true, // Enables compatibility between ES6 modules and CommonJS
+    "moduleResolution": "node", // Helps TypeScript find modules
+    "forceConsistentCasingInFileNames": true, // Ensures consistent file naming
+    "outDir": "./dist", // Output directory for compiled files
+    "rootDir": "./src", // Root directory of your source files
+    "sourceMap": true // Generates source maps for easier debugging
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -19,7 +31,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
-  },
+  ,
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

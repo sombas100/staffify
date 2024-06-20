@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import styles from "./RegisterPage.module.css";
 import { useNavigate, Link } from "react-router-dom";
@@ -17,6 +17,8 @@ export const RegisterPage = () => {
         password,
       });
       navigate("/login");
+      setPassword("");
+      setEmail("");
     } catch (error) {
       setError("Failed to register user");
     }
@@ -71,6 +73,7 @@ export const RegisterPage = () => {
           <Button typeof="submit" gradientMonochrome="failure" type="submit">
             Register
           </Button>
+          <div>{error}</div>
         </form>
       </div>
     </div>
