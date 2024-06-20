@@ -52,8 +52,8 @@ const SalaryPage: React.FC = () => {
         },
       });
       setSalaryList(res.data);
-    } catch (error) {
-      console.error("Error fetching salary list:", error);
+    } catch (error: any) {
+      console.error("Error fetching salary list:", error || error.message);
     }
   };
 
@@ -70,26 +70,21 @@ const SalaryPage: React.FC = () => {
       const date = new Date(); // Current date
       const res = await axiosInstance.post<Salary>(
         "/api/payments",
-        { staffId, amount, date, status: "paid" }, // Ensure these fields match your Payments model
+        { staffId, amount, date, status: "paid" },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const newSalary = res.data;
-      // Fetch the staff member data to populate the newly added salary
-      const staffRes = await axiosInstance.get<Staff>(
-        `/api/staff/${newSalary.staffId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      newSalary.staffId = staffRes.data; // Update the staffId field with full staff data
       setSalaryList((prevSalaryList) => [...prevSalaryList, newSalary]);
       alert("Salary added successfully");
       handleCloseAddModal();
-    } catch (error) {
-      alert("Error adding salary");
-      console.error(error);
+    } catch (error: any) {
+      console.error("Error adding salary:", error);
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        alert(`Error adding salary: ${error.response.data.message}`);
+      } else {
+        alert("Error adding salary");
+      }
     }
   };
 

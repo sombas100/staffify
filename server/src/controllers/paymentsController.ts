@@ -14,13 +14,16 @@ export const getPayments = async (req: Request, res: Response) => {
 
 export const createPayment = async (req: Request, res: Response) => {
     try {
-        const payment = new Payments(req.body);
-        await payment.save();
-        res.status(201).json(payment);
-    } catch (error:any) {
-        res.status(400).json({ message: 'Failed to create payment', error: error.message });
+      console.log('Create Payment Request Body:', req.body);
+      const payment = new Payments(req.body);
+      await payment.save();
+      const populatedPayment = await Payments.findById(payment._id).populate('staffId');
+      res.status(201).json(populatedPayment);
+    } catch (error: any) {
+      console.error('Error creating payment:', error.message);
+      res.status(400).json({ message: 'Failed to create payment', error: error.message });
     }
-};
+  };
 
 export const updatePayment = async (req: Request, res: Response) => {
     try {
