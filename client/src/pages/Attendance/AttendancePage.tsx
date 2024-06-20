@@ -21,7 +21,7 @@ interface Attendance {
     role: string;
   } | null;
   date: string;
-  status: "present" | "absent" | "on leave";
+  status: "present" | "absent" | "leave";
 }
 
 const AttendancePage: React.FC = () => {
@@ -76,11 +76,13 @@ const AttendancePage: React.FC = () => {
     status: string
   ) => {
     try {
+      console.log("Adding attendance with:", staffId, date, status);
       const res = await axiosInstance.post<Attendance>(
         "/api/attendance",
         { staffId, date, status },
         { headers: { Authorization: `Bearer${token}` } }
       );
+      console.log("Attendance added successfully", res.data);
       setAttendanceList((prevAttendanceList) => [
         ...prevAttendanceList,
         res.data,

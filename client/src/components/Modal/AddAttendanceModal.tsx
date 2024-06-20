@@ -69,7 +69,7 @@ const AddAttendanceModal: React.FC<AddAttendanceModalProps> = ({
           >
             <option value="present">Present</option>
             <option value="absent">Absent</option>
-            <option value="on leave">On Leave</option>
+            <option value="leave">Leave</option>
           </Select>
         </div>
       </Modal.Body>
