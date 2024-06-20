@@ -5,6 +5,7 @@ import { Button } from "flowbite-react";
 import { useAuth } from "../../contexts/AuthContext";
 import styles from "./SalaryPage.module.css";
 import AddSalaryModal from "../../components/Modal/AddSalaryModal";
+import { FaTrashCan } from "react-icons/fa6";
 
 interface Staff {
   _id: string;
@@ -22,6 +23,8 @@ interface Salary {
 
 const SalaryPage: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editSalaryId, setEditSalaryId] = useState<string | null>(null);
   const [staffList, setStaffList] = useState<Staff[]>([]);
   const [salaryList, setSalaryList] = useState<Salary[]>([]);
   const { token } = useAuth();
@@ -59,6 +62,8 @@ const SalaryPage: React.FC = () => {
 
   const handleOpenAddModal = () => {
     setIsAddModalOpen(true);
+    setIsEditModalOpen(false);
+    setEditSalaryId(null);
   };
 
   const handleCloseAddModal = () => {
@@ -67,7 +72,7 @@ const SalaryPage: React.FC = () => {
 
   const handleAddSalary = async (staffId: string, amount: number) => {
     try {
-      const date = new Date(); // Current date
+      const date = new Date();
       const res = await axiosInstance.post<Salary>(
         "/api/payments",
         { staffId, amount, date, status: "paid" },
@@ -86,6 +91,49 @@ const SalaryPage: React.FC = () => {
         alert("Error adding salary");
       }
     }
+  };
+
+  const handleOpenEditModal = (salaryId: string) => {
+    const salaryToEdit = salaryList.find((salary) => salary._id === salaryId);
+    if (salaryToEdit) {
+      setEditSalaryId(salaryId);
+      setIsAddModalOpen(true);
+      setIsEditModalOpen(true);
+    }
+  };
+
+  const handleEditSalary = async (salaryId: string, amount: number) => {
+    try {
+      const res = await axiosInstance.put<Salary>(
+        `/api/payments/${salaryId}`,
+        { amount },
+        { headers: { Authorization: `Bearer ${token} ` } }
+      );
+      setSalaryList((prevSalaryList) =>
+        prevSalaryList.map((salary) =>
+          salary._id === salaryId
+            ? { ...salary, amount: res.data.amount }
+            : salary
+        )
+      );
+      alert("Salary updated successfully");
+      handleCloseAddModal();
+    } catch (error) {
+      alert("Error updating salary");
+      console.error(error);
+    }
+  };
+
+  const handleDeleteSalary = async (salaryId: string) => {
+    try {
+      await axiosInstance.delete(`/api/payments/${salaryId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setSalaryList((prevSalaryList) =>
+        prevSalaryList.filter((salary) => salary._id !== salaryId)
+      );
+      alert("Salary deleted successfully");
+    } catch (error) {}
   };
 
   return (
@@ -118,6 +166,7 @@ const SalaryPage: React.FC = () => {
                 <th>Staff Member</th>
                 <th>Amount</th>
                 <th>Date Paid</th>
+                <th data-label="Actions">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -126,6 +175,14 @@ const SalaryPage: React.FC = () => {
                   <td>{salary.staffId?.name || "Unknown Staff"}</td>
                   <td>{salary.amount}</td>
                   <td>{new Date(salary.date).toLocaleDateString()}</td>
+                  <td>
+                    <Button
+                      gradientMonochrome="failure"
+                      onClick={() => handleDeleteSalary(salary._id)}
+                    >
+                      <FaTrashCan size={20} />
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -187,7 +187,6 @@ const StaffPage: React.FC = () => {
                       <TbUserEdit size={20} />
                     </Button>
                     <Button
-                      outline
                       gradientMonochrome="failure"
                       onClick={() => handleDeleteStaff(staff._id)}
                     >
