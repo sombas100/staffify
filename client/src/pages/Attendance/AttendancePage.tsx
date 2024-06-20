@@ -15,7 +15,11 @@ interface Staff {
 
 interface Attendance {
   _id: string;
-  staff: Staff | null;
+  staffId: {
+    _id: string;
+    name: string;
+    role: string;
+  };
   date: string;
   status: "present" | "absent" | "on leave";
 }
@@ -144,9 +148,7 @@ const AttendancePage: React.FC = () => {
             <tbody>
               {attendanceList.map((attendance) => (
                 <tr key={attendance._id}>
-                  <td>
-                    {attendance.staff ? attendance.staff.name : "Unknown Staff"}
-                  </td>
+                  <td>{attendance.staffId.name}</td>
                   <td>{new Date(attendance.date).toLocaleDateString()}</td>
                   <td>{attendance.status}</td>
                   <td>

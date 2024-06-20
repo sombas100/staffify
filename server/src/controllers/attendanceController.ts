@@ -12,11 +12,20 @@ export const getAttendance = async (req: Request, res: Response) => {
 
 export const createAttendance = async (req: Request, res: Response) => {
     try {
-        const attendance = new Attendance(req.body);
+        const { staffId, date, status } = req.body;
+        const attendance = new Attendance({ staffId, date, status });
         await attendance.save();
-        res.status(201).json(attendance);
-    } catch (error:any) {
-       res.status(400) .json({ message: 'Failed to create attendance record', error: error.message });
+
+        
+        const populatedAttendance = await Attendance.findById(attendance._id).populate('staffId');
+
+        if (!populatedAttendance) {
+            throw new Error('Failed to populate attendance record');
+        }
+
+        res.status(201).json(populatedAttendance);
+    } catch (error: any) {
+        res.status(400).json({ message: 'Failed to create attendance record', error: error.message });
     }
 };
 
