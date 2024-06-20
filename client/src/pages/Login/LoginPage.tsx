@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
           style={{ marginLeft: "60px", fontSize: "25px" }}
           className="mb-5 font-bold"
         >
-          Start managaging staff
+          Start managaging your staff
         </h1>
         <form onSubmit={handleSubmit} className="flex max-w-md flex-col gap-4">
           <div>

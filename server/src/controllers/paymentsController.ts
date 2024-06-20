@@ -24,14 +24,13 @@ export const createPayment = async (req: Request, res: Response) => {
 
 export const updatePayment = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const payment = await Payments.findByIdAndUpdate(id, req.body, { new: true });
-        if (!payment) {
-            return res.status(404).json({ message: 'Payment record not found' });
-        } 
-        res.json(payment);
+        const { staffId, amount, date, status } = req.body;
+        const payment = new Payments({ staffId, amount, date, status });
+        await payment.save();
+        res.status(201).json(payment);
     } catch (error:any) {
-        res.status(400).json({ message: 'Failed to update payment', error: error.message });
+        console.error("Error creating payment:", error);
+        res.status(400).json({ message: 'Failed to create payment', error: error.message });
     }
 };
 

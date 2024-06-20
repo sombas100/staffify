@@ -34,7 +34,7 @@ const AddSalaryModal: React.FC<AddSalaryModalProps> = ({
       <Modal.Header>Add Salary</Modal.Header>
       <Modal.Body>
         <div className={styles.formGroup}>
-          <Label htmlFor="staff" value="Select Staff Member" />
+          <Label htmlFor="staff" value="Staff" />
           <Select
             id="staff"
             value={selectedStaff}
@@ -59,10 +59,18 @@ const AddSalaryModal: React.FC<AddSalaryModalProps> = ({
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button gradientMonochrome="success" onClick={handleAddSalary}>
+        <Button
+          style={{ fontWeight: "600" }}
+          gradientMonochrome="success"
+          onClick={handleAddSalary}
+        >
           Add Salary
         </Button>
-        <Button gradientMonochrome="failure" onClick={onClose}>
+        <Button
+          style={{ fontWeight: "600" }}
+          gradientMonochrome="failure"
+          onClick={onClose}
+        >
           Cancel
         </Button>
       </Modal.Footer>

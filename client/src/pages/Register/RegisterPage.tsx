@@ -29,7 +29,7 @@ export const RegisterPage = () => {
           style={{ marginLeft: "60px", fontSize: "25px" }}
           className="mb-5 font-bold"
         >
-          Start managaging staff
+          Start managaging your staff
         </h1>
         <form
           onSubmit={handleRegister}
