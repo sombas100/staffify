@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-dotenv.config(); 
+require('dotenv').config();
+
 
 import express from 'express';
 import mongoose from 'mongoose';
