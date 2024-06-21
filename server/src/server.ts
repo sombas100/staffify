@@ -20,12 +20,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors<Request>());
 app.use(bodyParser.json());
 
-const uri = process.env.MONGODB_URI;
-mongoose.connect('mongodb+srv://sparkyvids:VshiiFobWB0oDgQt@staffify.aysa3gi.mongodb.net/')
-.then(() => console.log('Staffify database is connected'))
-.catch((err) => {
-    console.error('MongoDB connection error:', err);
-  });
+const uri = process.env.MONGODB_URI || 'mongodb+srv://sparkyvids:VshiiFobWB0oDgQt@staffify.aysa3gi.mongodb.net/';
+mongoose.connect(uri);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/staff', staffRoutes);
