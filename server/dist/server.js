@@ -18,7 +18,11 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(body_parser_1.default.json());
 const uri = process.env.MONGODB_URI || 'mongodb+srv://sparkyvids:VshiiFobWB0oDgQt@staffify.aysa3gi.mongodb.net/';
-mongoose_1.default.connect(uri);
+mongoose_1.default.connect(uri)
+    .then(() => console.log('Staffify database is connected'))
+    .catch((err) => {
+    console.error('MongoDB connection error:', err);
+});
 app.use('/api/auth', auth_1.default);
 app.use('/api/staff', staff_1.default);
 app.use('/api/attendance', auth_2.authMiddleware, attendance_1.default);

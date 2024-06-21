@@ -21,7 +21,11 @@ app.use(cors<Request>());
 app.use(bodyParser.json());
 
 const uri = process.env.MONGODB_URI || 'mongodb+srv://sparkyvids:VshiiFobWB0oDgQt@staffify.aysa3gi.mongodb.net/';
-mongoose.connect(uri,);
+mongoose.connect(uri)
+.then(() => console.log('Staffify database is connected'))
+.catch((err) => {
+    console.error('MongoDB connection error:', err);
+  });
 
 app.use('/api/auth', authRoutes);
 app.use('/api/staff', staffRoutes);
