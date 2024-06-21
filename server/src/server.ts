@@ -9,7 +9,7 @@ import staffRoutes from './routes/staff';
 import attendanceRoutes from './routes/attendance';
 import paymentRoutes from './routes/payments';
 import authRoutes from './routes/auth';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { authMiddleware } from './controllers/auth';
 
 
@@ -35,3 +35,8 @@ app.use('/api/payments',authMiddleware, paymentRoutes);
 app.listen(PORT, () => {
     console.log(`Server is now running on port: ${PORT}`);
 })
+
+app.use((err:any, req:Request, res: Response, next: Function) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
