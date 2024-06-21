@@ -21,7 +21,7 @@ app.use(cors<Request>());
 app.use(bodyParser.json());
 
 const uri = process.env.MONGODB_URI || 'mongodb+srv://sparkyvids:VshiiFobWB0oDgQt@staffify.aysa3gi.mongodb.net/';
-mongoose.connect(uri);
+mongoose.connect(uri,);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/staff', staffRoutes);
