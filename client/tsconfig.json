@@ -7,32 +7,20 @@
     "skipLibCheck": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "strict": true, // Enables all strict type-checking options
-    "esModuleInterop": true, // Enables compatibility between ES6 modules and CommonJS
-    "moduleResolution": "node", // Helps TypeScript find modules
-    "forceConsistentCasingInFileNames": true, // Ensures consistent file naming
-    "outDir": "./dist", // Output directory for compiled files
-    "rootDir": "./src", // Root directory of your source files
-    "sourceMap": true, // Generates source maps for easier debugging
-    "jsx": "react-jsx"
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist"],
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "sourceMap": true,
+    "jsx": "react-jsx",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
-  ,
-  
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
