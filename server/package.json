@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "./dist/server.js",
-  "type": "module",
   "scripts": {
     "start": "node ./dist/server.js",
-    "dev": "node ./src/server.ts",
+    "dev": "nodemon ./src/server.ts",
     "build": "tsc",
-    "serve": "ts-node ./src/server.ts"
+    "serve": "node ./dist/server.js"
   },
   "keywords": [],
   "author": "",
