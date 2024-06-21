@@ -3,7 +3,7 @@ dotenv.config();
 
 import express from 'express';
 import mongoose from 'mongoose';
-import cors = require('cors')
+import cors = require('cors');
 import bodyParser from 'body-parser';
 import staffRoutes from './routes/staff';
 import attendanceRoutes from './routes/attendance';
