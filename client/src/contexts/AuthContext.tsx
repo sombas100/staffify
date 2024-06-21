@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useContext,
 } from "react";
-import axios from "axios";
+
 import { axiosInstance, setAuthToken } from "../api/axiosConfig";
 
 interface AuthContextProps {
