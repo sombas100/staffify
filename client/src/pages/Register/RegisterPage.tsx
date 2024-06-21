@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import styles from "./RegisterPage.module.css";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+
+import { axiosInstance } from "../../api/axiosConfig";
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ export const RegisterPage = () => {
 
   const handleRegister = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axiosInstance.post("/api/auth/register", {
         email,
         password,
       });

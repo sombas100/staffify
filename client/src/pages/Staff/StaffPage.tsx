@@ -29,14 +29,11 @@ const StaffPage: React.FC = () => {
 
   const fetchStaffList = async () => {
     try {
-      const res = await axiosInstance.get<Staff[]>(
-        "http://localhost:5000/api/staff",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axiosInstance.get<Staff[]>("/api/staff", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setStaffList(res.data);
     } catch (error) {
       console.error("Error fetching staff list:", error);
@@ -62,15 +59,11 @@ const StaffPage: React.FC = () => {
 
   const handleAddStaff = async (formData: Omit<Staff, "_id">) => {
     try {
-      const res = await axiosInstance.post<Staff>(
-        "http://localhost:5000/api/staff",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axiosInstance.post<Staff>("/api/staff", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const newStaffMember = res.data;
       setStaffList((prevStaffList) => [...prevStaffList, newStaffMember]);
       alert("Staff member added successfully");
@@ -84,7 +77,7 @@ const StaffPage: React.FC = () => {
   const handleUpdateStaff = async (updatedStaff: Staff) => {
     try {
       const res = await axiosInstance.put<Staff>(
-        `http://localhost:5000/api/staff/${updatedStaff._id}`,
+        `/api/staff/${updatedStaff._id}`,
         updatedStaff,
         {
           headers: {
@@ -108,7 +101,7 @@ const StaffPage: React.FC = () => {
 
   const handleDeleteStaff = async (staffId: string) => {
     try {
-      await axiosInstance.delete(`http://localhost:5000/api/staff/${staffId}`, {
+      await axiosInstance.delete(`/api/staff/${staffId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
